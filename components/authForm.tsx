@@ -18,7 +18,7 @@ const AuthForm = ({ mode }) => {
 
     const user = await auth(mode, { email, password })
     setIsLoading(false)
-    router.push('/')
+    router.push('/playlist/1')
   }
 
   return (

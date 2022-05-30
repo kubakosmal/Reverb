@@ -25,16 +25,19 @@ const navMenu = [
     name: 'Home',
     icon: MdHome,
     route: '/',
+    active: true,
   },
   {
     name: 'Search',
     icon: MdSearch,
     route: '/search',
+    active: false,
   },
   {
     name: 'Your Library',
     icon: MdLibraryMusic,
     route: '/library',
+    active: false,
   },
 ]
 
@@ -43,11 +46,13 @@ const musicMenu = [
     name: 'Create Playlist',
     icon: MdPlaylistAdd,
     route: '/',
+    active: false,
   },
   {
     name: 'Favorites',
     icon: MdFavorite,
     route: '/favorites',
+    active: false,
   },
 ]
 
@@ -72,13 +77,17 @@ const Sidebar = () => {
             {navMenu.map((menu) => (
               <ListItem paddingX="20px" fontSize="16px" key={menu.name}>
                 <LinkBox>
-                  <NextLink href={menu.route} passHref>
-                    <LinkOverlay>
+                  <NextLink
+                    href={menu.active ? menu.route : '/playlist/1'}
+                    passHref
+                  >
+                    <LinkOverlay color={menu.active ? 'gray.500' : 'gray.700'}>
                       <ListIcon
                         as={menu.icon}
-                        color="white"
+                        color={menu.active ? 'white' : 'gray.800'}
                         marginRight="20px"
                       />
+
                       {menu.name}
                     </LinkOverlay>
                   </NextLink>
@@ -87,16 +96,16 @@ const Sidebar = () => {
             ))}
           </List>
         </Box>
-        <Box marginTop="20px">
+        <Box marginTop="20px" marginBottom="10px">
           <List spacing={2}>
             {musicMenu.map((menu) => (
               <ListItem paddingX="20px" fontSize="16px" key={menu.name}>
                 <LinkBox>
-                  <NextLink href={menu.route} passHref>
-                    <LinkOverlay>
+                  <NextLink href="/playlist/1" passHref>
+                    <LinkOverlay color={menu.active ? 'gray.500' : 'gray.700'}>
                       <ListIcon
                         as={menu.icon}
-                        color="white"
+                        color={menu.active ? 'white' : 'gray.800'}
                         marginRight="20px"
                       />
                       {menu.name}

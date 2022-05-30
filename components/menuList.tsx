@@ -4,8 +4,8 @@ import {
   LinkBox,
   LinkOverlay,
   ListIcon,
-} from "@chakra-ui/layout";
-import NextLink from "next/link";
+} from '@chakra-ui/layout'
+import NextLink from 'next/link'
 
 const MenuList = ({ listObject, withIcons }) => {
   return (
@@ -16,7 +16,11 @@ const MenuList = ({ listObject, withIcons }) => {
             <NextLink href={item.route} passHref>
               <LinkOverlay>
                 {withIcons ? (
-                  <ListIcon as={item.icon} color="white" marginRight="20px" />
+                  <ListIcon
+                    as={item.icon}
+                    color={item.active ? 'white' : 'gray.300'}
+                    marginRight="20px"
+                  />
                 ) : null}
                 {item.name}
               </LinkOverlay>
@@ -25,7 +29,7 @@ const MenuList = ({ listObject, withIcons }) => {
         </ListItem>
       ))}
     </List>
-  );
-};
+  )
+}
 
-export default MenuList;
+export default MenuList
