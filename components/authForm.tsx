@@ -28,11 +28,11 @@ const AuthForm = ({ mode }) => {
         height="100px"
         borderBottom="white 1px solid"
       >
-        <NextImage
+        {/* <NextImage
           src="/images/trax-logo.svg"
           height="60px"
           width="120px"
-        ></NextImage>
+        ></NextImage> */}
       </Flex>
       <Flex justify="center" align="center" height="calc(100vh - 100px)">
         <Box padding="50px" bg="gray.900" borderRadius="6px">

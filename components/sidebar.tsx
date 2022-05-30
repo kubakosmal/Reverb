@@ -9,6 +9,7 @@ import {
   Center,
   LinkBox,
   LinkOverlay,
+  Text,
 } from '@chakra-ui/layout'
 import {
   MdHome,
@@ -62,7 +63,9 @@ const Sidebar = () => {
     >
       <Box paddingY="20px" height="100%">
         <Box width="120px" marginBottom="20px" paddingX="20px">
-          <NextImage src="/logo.svg" height={60} width={120} />
+          <Text fontSize="2xl" color="white">
+            Reverb
+          </Text>
         </Box>
         <Box marginBottom="20px">
           <List spacing={2}>
