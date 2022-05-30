@@ -208,7 +208,7 @@ const Player = ({ songs, activeSong }) => {
               onChangeEnd={() => setIsSeeking(false)}
             >
               <RangeSliderTrack bg="gray.800">
-                <RangeSliderFilledTrack bg="gray.600" />
+                <RangeSliderFilledTrack bg="white" />
               </RangeSliderTrack>
               <RangeSliderThumb index={0} />
             </RangeSlider>

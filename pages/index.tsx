@@ -1,8 +1,9 @@
 import prisma from '../lib/prisma'
 import GradientLayout from '../components/gradientLayout'
-import { Box, Flex, Text } from '@chakra-ui/layout'
+import { Box, Flex, Text, LinkBox } from '@chakra-ui/layout'
 import { Image } from '@chakra-ui/react'
 import { useMe } from '../lib/hooks'
+import NextLink from 'next/link'
 
 const Home = ({ artists }) => {
   const { user, isLoading } = useMe()
@@ -29,18 +30,27 @@ const Home = ({ artists }) => {
         </Box>
         <Flex gap="30px" flexWrap="wrap">
           {artists.map((artist) => (
-            <Box width="150px" key={artist.id}>
-              <Box bg="gray.900" borderRadius="4px" padding="15px" width="100%">
-                <Image
-                  src="https://placekitten.com/300/300"
-                  borderRadius="100%"
-                />
-                <Box marginTop="20px">
-                  <Text fontSize="large">{artist.name}</Text>
-                  <Text fontSize="sm">Artist</Text>
+            <LinkBox>
+              <NextLink href={`/artist/${artist.id}`}>
+                <Box width="150px" cursor="pointer" key={artist.id}>
+                  <Box
+                    bg="gray.900"
+                    borderRadius="4px"
+                    padding="15px"
+                    width="100%"
+                  >
+                    <Image
+                      src={`https://picsum.photos/400?random=${artist.id}`}
+                      borderRadius="100%"
+                    />
+                    <Box marginTop="20px">
+                      <Text fontSize="large">{artist.name}</Text>
+                      <Text fontSize="sm">Artist</Text>
+                    </Box>
+                  </Box>
                 </Box>
-              </Box>
-            </Box>
+              </NextLink>
+            </LinkBox>
           ))}
         </Flex>
       </Box>
