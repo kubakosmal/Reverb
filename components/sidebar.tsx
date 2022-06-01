@@ -45,7 +45,7 @@ const musicMenu = [
   {
     name: 'Create Playlist',
     icon: MdPlaylistAdd,
-    route: '/',
+    route: '/api/newplaylist',
     active: false,
   },
   {
@@ -67,15 +67,15 @@ const Sidebar = () => {
       color="gray"
     >
       <Box paddingY="20px" height="100%">
-        <Box width="120px" marginBottom="20px" paddingX="20px">
-          <Text fontSize="2xl" color="white">
+        <Box marginBottom="20px" paddingX="20px">
+          <Text fontSize="4xl" color="white">
             Reverb
           </Text>
         </Box>
         <Box marginBottom="20px">
           <List spacing={2}>
             {navMenu.map((menu) => (
-              <ListItem paddingX="20px" fontSize="16px" key={menu.name}>
+              <ListItem paddingX="20px" fontSize="18px" key={menu.name}>
                 <LinkBox>
                   <NextLink
                     href={menu.active ? menu.route : '/playlist/1'}
@@ -99,7 +99,7 @@ const Sidebar = () => {
         <Box marginTop="20px" marginBottom="10px">
           <List spacing={2}>
             {musicMenu.map((menu) => (
-              <ListItem paddingX="20px" fontSize="16px" key={menu.name}>
+              <ListItem paddingX="20px" fontSize="18px" key={menu.name}>
                 <LinkBox>
                   <NextLink href="/playlist/1" passHref>
                     <LinkOverlay color={menu.active ? 'gray.500' : 'gray.700'}>

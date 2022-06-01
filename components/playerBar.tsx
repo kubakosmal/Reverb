@@ -1,4 +1,5 @@
 import { Box, Flex, Text } from '@chakra-ui/layout'
+import { Image } from '@chakra-ui/react'
 import Player from './player'
 import { useSelector } from 'react-redux'
 import { useEffect } from 'react'
@@ -14,10 +15,20 @@ const PlayerBar = () => {
       <Flex align="center" height="100%">
         <Box padding="20px" color="white" width="30%">
           {activeSong ? (
-            <Box>
-              <Text fontSize="large">{activeSong?.name}</Text>
-              <Text fontSize="sm">{activeSong?.artist.name}</Text>
-            </Box>
+            <Flex gap="10px" align="center">
+              <Box>
+                <Image
+                  boxSize="45px"
+                  boxShadow="2xl"
+                  src={`https://picsum.photos/400?random=${activeSong.id}`}
+                  fit="cover"
+                />
+              </Box>
+              <Box>
+                <Text fontSize="medium">{activeSong?.name}</Text>
+                <Text fontSize="xs">{activeSong?.artist.name}</Text>
+              </Box>
+            </Flex>
           ) : null}
         </Box>
 
@@ -28,7 +39,7 @@ const PlayerBar = () => {
               animate={{
                 opacity: 1,
               }}
-              transition={{ duration: 1 }}
+              transition={{ duration: 0.25 }}
             >
               <Player songs={songs} activeSong={activeSong} />
             </motion.div>

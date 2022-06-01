@@ -125,6 +125,10 @@ const Player = ({ songs, activeSong }) => {
     dispatch(changeActiveSong(songs[index]))
   }, [index, songs])
 
+  useEffect(() => {
+    setIsPlaying(true)
+  }, [activeSong])
+
   return (
     <Box>
       <Box>

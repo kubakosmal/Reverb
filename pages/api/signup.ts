@@ -36,7 +36,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   res.setHeader(
     'Set-Cookie',
     cookie.serialize('TRAX_ACCESS_TOKEN', token, {
-      httpOnly: true,
+      httpOnly: false,
       maxAge: 8 * 60 * 60,
       path: '/',
       sameSite: 'lax',

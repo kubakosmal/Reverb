@@ -10,15 +10,16 @@ const Home = ({ artists }) => {
 
   if (isLoading) {
     return null
+  } else {
   }
 
   return (
     <GradientLayout
-      color="purple"
+      color="cyan"
       title={`${user.firstName} ${user.lastName}`}
       subtitle="profile"
       description={`${user.playlistCount} public playlists`}
-      image="https://i.pinimg.com/originals/db/b9/cf/dbb9cf20a1f2507a84cb5ebf59b0eab1.png"
+      image={user.avatar}
       roundImage={true}
     >
       <Box color="white" paddingX="40px">
@@ -30,7 +31,7 @@ const Home = ({ artists }) => {
         </Box>
         <Flex gap="30px" flexWrap="wrap">
           {artists.map((artist) => (
-            <LinkBox>
+            <LinkBox key={artist.id}>
               <NextLink href={`/artist/${artist.id}`}>
                 <Box width="150px" cursor="pointer" key={artist.id}>
                   <Box

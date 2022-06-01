@@ -10,7 +10,9 @@ export default function Artist({ artist }) {
       image={`https://picsum.photos/400?random=${artist.id}`}
       title={artist.name}
       subtitle="Artist"
-      description=""
+      description={`${artist.songs.length} song${
+        artist.songs.length > 1 ? 's' : ''
+      }`}
       roundImage
     >
       <SongTable songs={artist.songs}></SongTable>
@@ -36,8 +38,6 @@ export const getServerSideProps = async ({ query }) => {
       },
     },
   })
-
-  console.log(artist)
 
   return {
     props: {
