@@ -2,24 +2,26 @@ import prisma from '../lib/prisma'
 import GradientLayout from '../components/gradientLayout'
 import { Box, Flex, Text, LinkBox } from '@chakra-ui/layout'
 import { Image } from '@chakra-ui/react'
-import { useMe } from '../lib/hooks'
 import NextLink from 'next/link'
+import { useSession, signIn, signOut } from 'next-auth/react'
 
 const Home = ({ artists }) => {
-  const { user, isLoading } = useMe()
+  const { data: session, status } = useSession()
+  const chujwieco = useSession()
 
-  if (isLoading) {
+  if (status != 'authenticated') {
     return null
-  } else {
   }
+
+  const user = session.user
 
   return (
     <GradientLayout
       color="cyan"
-      title={`${user.firstName} ${user.lastName}`}
+      title={user.name}
       subtitle="profile"
-      description={`${user.playlistCount} public playlists`}
-      image={user.avatar}
+      description={`10 public playlists`}
+      image={user.image}
       roundImage={true}
     >
       <Box color="white" paddingX="40px">

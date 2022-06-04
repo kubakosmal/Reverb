@@ -32,11 +32,12 @@ const run = async () => {
     update: {},
     create: {
       email: 'user@test.com',
-      password: bcrypt.hashSync('password', salt),
-      firstName: 'Jakub',
-      lastName: 'Kosmal',
-      avatar:
-        'https://m.natemat.pl/daa6140637138b374b456f8d7fe2435c,0,0,0,0.jpg',
+      /* password: bcrypt.hashSync('password', salt), */
+      /* firstName: 'Jakub', */
+      /* lastName: 'Kosmal', */
+      /* avatar:
+        'https://m.natemat.pl/daa6140637138b374b456f8d7fe2435c,0,0,0,0.jpg', */
+      name: 'Jakub',
     },
   })
 

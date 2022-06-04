@@ -11,25 +11,19 @@ import {
 import NextLink from 'next/link'
 import { Image } from '@chakra-ui/react'
 import { MdArrowDropDown } from 'react-icons/md'
-import { useMe } from '../lib/hooks'
 import { useState } from 'react'
-import { useCookies } from 'react-cookie'
 import { useRouter } from 'next/router'
+import { useSession, signOut } from 'next-auth/react'
 
 export default () => {
   const [dropdown, setDropdown] = useState(false)
-  const { user, isLoading } = useMe()
-  const [cookies, setCookie, removeCookie] = useCookies(['TRAX_ACCESS_TOKEN'])
-  const router = useRouter()
+  const { data: session, status } = useSession()
 
-  if (isLoading) {
+  if (status != 'authenticated') {
     return null
   }
 
-  const signOut = () => {
-    removeCookie('TRAX_ACCESS_TOKEN')
-    router.push('/signin')
-  }
+  let user = session.user
 
   return (
     <>
@@ -63,14 +57,12 @@ export default () => {
               borderRadius="100%"
               height="30px"
               width="30px"
-              src={user.avatar}
+              src={user.image}
               fit="cover"
             ></Image>
           </Box>
 
-          <Text>
-            {user.firstName} {user.lastName}
-          </Text>
+          <Text>{user.name}</Text>
           <MdArrowDropDown fontSize="20px"></MdArrowDropDown>
         </Flex>
       </Button>
@@ -113,7 +105,7 @@ export default () => {
                   bgColor: 'gray.800',
                 },
               }}
-              onClick={signOut}
+              onClick={() => signOut()}
               cursor="pointer"
             >
               Sign out

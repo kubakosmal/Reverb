@@ -2,6 +2,8 @@ import { Box } from '@chakra-ui/layout'
 import GradientLayout from '../../components/gradientLayout'
 import prisma from '../../lib/prisma'
 import SongTable from '../../components/songsTable'
+import PlaylistDropdown from '../../components/playlistDropdown'
+import PlayButton from '../../components/playButton'
 
 export default function Artist({ artist }) {
   return (
@@ -15,7 +17,12 @@ export default function Artist({ artist }) {
       }`}
       roundImage
     >
-      <SongTable songs={artist.songs}></SongTable>
+      <Box bg="transparent" color="white">
+        <Box padding="10px" marginBottom="20px">
+          <PlayButton songs={artist.songs} />
+          <SongTable songs={artist.songs}></SongTable>
+        </Box>
+      </Box>
     </GradientLayout>
   )
 }

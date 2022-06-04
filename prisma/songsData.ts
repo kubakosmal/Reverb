@@ -21,6 +21,61 @@ export const artistsData: {
         duration: 185,
         url: 'https://dl.dropboxusercontent.com/s/9h90r7ku3df5o9y/long-day.mp3?dl=0',
       },
+      {
+        name: 'Wishes',
+        duration: 196,
+        url: 'https://www.dropbox.com/s/08jwoq7huawp1kr/purrple-cat-wishes.mp3?raw=1',
+      },
+      {
+        name: 'Edge of The Universe',
+        duration: 180,
+        url: 'https://www.dropbox.com/s/1t0oaa6zp4432j9/purrple-cat-edge-of-the-universe.mp3?raw=1',
+      },
+      {
+        name: 'Yesteryear',
+        duration: 167,
+        url: 'https://www.dropbox.com/s/fbjn8uc0vgtit2k/purrple-cat-yesteryear.mp3?raw=1',
+      },
+      {
+        name: 'Dark Moon',
+        duration: 175,
+        url: 'https://www.dropbox.com/s/r88rreh0roaszq1/purrple-cat-dark-moon.mp3?raw=1',
+      },
+      {
+        name: 'Secrets',
+        duration: 168,
+        url: 'https://www.dropbox.com/s/lateuz4g89mnz4s/purrple-cat-secrets.mp3?raw=1',
+      },
+      {
+        name: 'Rainbow Falls',
+        duration: 180,
+        url: 'https://www.dropbox.com/s/6d6zu2d1391dte6/purrple-cat-rainbow-falls.mp3?raw=1',
+      },
+      {
+        name: 'Space Rain',
+        duration: 127,
+        url: 'https://www.dropbox.com/s/yuyu9ktj6fl867y/purrple-cat-space-rain.mp3?raw=1',
+      },
+    ],
+  },
+  {
+    name: 'Darren Curtis',
+    songs: [
+      {
+        name: 'Dance Of The Dead',
+        duration: 150,
+        url: 'https://www.dropbox.com/s/c679ymmx9gm3rms/darren-curtis-dance-of-the-dead.mp3?raw=1',
+      },
+      {
+        name: 'We Rule The Sky',
+        duration: 157,
+        url: 'https://www.dropbox.com/s/bkg6n7nb26j791o/darren-curtis-we-rule-the-sky.mp3?raw=1',
+      },
+      {
+        name: 'And The Sun Rises',
+        duration: 180,
+        url: 'https://www.dropbox.com/s/ejvvlid8nspf5bm/darren-curtis-and-the-sun-rises.mp3?raw=1',
+      },
     ],
   },
   {

@@ -1,7 +1,5 @@
 import { Box, Text, Flex } from '@chakra-ui/layout'
 import { Image } from '@chakra-ui/react'
-import { useMe } from '../lib/hooks'
-import { useState } from 'react'
 import UserDropdown from './userDropdown'
 
 const GradientLayout = ({
@@ -13,31 +11,34 @@ const GradientLayout = ({
   description,
   roundImage,
 }) => {
-  const { user, isLoading } = useMe()
   return (
     <Box
       position="relative"
       height="100%"
       overflowY="auto"
-      bgGradient={`linear(${color}.500 0%, ${color}.600 15%, ${color}.700 20%, rgba(0,0,0,0.95) 80%)`}
+      bgGradient={`linear(${color}.600 0%, ${color}.700 5%, ${color}.800 10%, rgba(0,0,0,0.95) 70%)`}
     >
       <UserDropdown />
       <Box>
-        <Flex bg={`${color}.600`} padding="20px" align="end">
+        <Flex
+          /* bgColor={`${color}.800`} */ bgGradient={`linear(to top, ${color}.800, ${color}.600)`}
+          padding="20px"
+          align="end"
+        >
           <Box padding="20px">
             <Image
               boxSize="225px"
-              boxShadow="2xl"
+              boxShadow="dark-lg"
               src={image}
               borderRadius={roundImage ? '100%' : '3px'}
               fit="cover"
             />
           </Box>
-          <Box padding="20px" lineHeight="45px" color="white">
+          <Box padding="20px" lineHeight="55px" color="white">
             <Text fontSize="sm" fontWeight="bold" casing="uppercase">
               {subtitle}
             </Text>
-            <Text fontSize="7xl" fontWeight="bold">
+            <Text dropShadow="2xl" fontSize="8xl" fontWeight="bold">
               {title}
             </Text>
             <Text fontSize="sm">{description}</Text>

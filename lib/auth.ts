@@ -1,6 +1,8 @@
 import jwt from 'jsonwebtoken'
 import { NextApiRequest, NextApiResponse } from 'next'
 import prisma from './prisma'
+import { useSession } from 'next-auth/react'
+import { getSession } from 'next-auth/react'
 
 interface JwtPayload {
   id: number
@@ -33,6 +35,13 @@ export const validateRoute = (handler) => {
 
     res.status(401)
     res.json({ error: 'Not Authorizied' })
+  }
+}
+
+export const includeUser = (handler) => {
+  return async (req, res) => {
+    const session = await getSession({ req })
+    return handler(req, res, session.user)
   }
 }
 

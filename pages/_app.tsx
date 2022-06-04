@@ -3,6 +3,10 @@ import PlayerLayout from '../components/playerLayout'
 import 'reset-css'
 import store from '../lib/store'
 import { Provider } from 'react-redux'
+import { SessionProvider } from 'next-auth/react'
+import { QueryClient, QueryClientProvider } from 'react-query'
+
+const queryClient = new QueryClient()
 
 const theme = extendTheme({
   colors: {
@@ -32,20 +36,23 @@ const theme = extendTheme({
   },
 })
 
-const MyApp = ({ Component, pageProps }) => {
+export default function App({
+  Component,
+  pageProps: { session, ...pageProps },
+}) {
   return (
-    <ChakraProvider theme={theme}>
-      <Provider store={store}>
-        {Component.authPage ? (
-          <Component {...pageProps} />
-        ) : (
-          <PlayerLayout>
+    <SessionProvider session={session}>
+      <ChakraProvider theme={theme}>
+        <Provider store={store}>
+          {Component.authPage ? (
             <Component {...pageProps} />
-          </PlayerLayout>
-        )}
-      </Provider>
-    </ChakraProvider>
+          ) : (
+            <PlayerLayout>
+              <Component {...pageProps} />
+            </PlayerLayout>
+          )}
+        </Provider>
+      </ChakraProvider>
+    </SessionProvider>
   )
 }
-
-export default MyApp

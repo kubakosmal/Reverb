@@ -5,6 +5,7 @@ import { useSWRConfig } from 'swr'
 import { auth } from '../lib/mutations'
 import { useState } from 'react'
 import NextImage from 'next/image'
+import { signIn } from 'next-auth/react'
 
 const AuthForm = ({ mode }) => {
   const [email, setEmail] = useState('')
@@ -14,11 +15,29 @@ const AuthForm = ({ mode }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setIsLoading(true)
+    /* setIsLoading(true)
 
     const user = await auth(mode, { email, password })
     setIsLoading(false)
-    router.push('/playlist/1')
+    router.push('/playlist/1') */
+
+    signIn('credentials', {
+      email: email,
+      password: password,
+      callbackUrl: `${window.location.origin}/`,
+      redirect: false,
+    }).then((result) => {
+      if (result.error !== null) {
+        if (result.status === 401) {
+          console.log('NOT AUTHORIZED')
+        } else {
+          console.log('different error')
+          console.log(result.error)
+        }
+      } else {
+        router.push(result.url)
+      }
+    })
   }
 
   return (

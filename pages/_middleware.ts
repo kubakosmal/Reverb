@@ -1,6 +1,6 @@
-import { NextResponse } from 'next/server'
+/* import { NextResponse } from 'next/server'
 
-const signedinPages = ['/', '/playlist', '/library']
+const signedinPages = ['/playlist', '/library']
 
 export default function middleware(req) {
   if (signedinPages.find((p) => p === req.nextUrl.pathname)) {
@@ -13,3 +13,5 @@ export default function middleware(req) {
     }
   }
 }
+ */
+export default () => {}
