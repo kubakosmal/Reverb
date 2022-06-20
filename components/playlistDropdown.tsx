@@ -19,8 +19,10 @@ import fetcher from '../lib/fetcher'
 import { useRouter } from 'next/router'
 import { useSWRConfig } from 'swr'
 import { useDisclosure } from '@chakra-ui/react'
+import { PlaylistDropdownProps } from '../types/components'
+import { Playlist } from '../types/data'
 
-export default function PlaylistDropdown({ playlist, songs }) {
+export default function PlaylistDropdown({ playlist }: PlaylistDropdownProps) {
   const playlistId = playlist.id
   const [dropdown, setDropdown] = useState(false)
   const dropdownBox = useRef(null)
@@ -35,7 +37,7 @@ export default function PlaylistDropdown({ playlist, songs }) {
     router.push(window.location.origin)
   }
 
-  const handleClickOutside = (e) => {
+  const handleClickOutside = (e: MouseEvent) => {
     if (dropdownBox.current && !dropdownBox.current.contains(e.target)) {
       setDropdown(false)
     }
@@ -67,7 +69,7 @@ export default function PlaylistDropdown({ playlist, songs }) {
         <Box
           position="absolute"
           hidden={!dropdown}
-          bgColor="gray.900"
+          bgColor="black.1000"
           color="white"
           left="15px"
           borderRadius="5px"
@@ -112,7 +114,7 @@ export default function PlaylistDropdown({ playlist, songs }) {
   )
 }
 
-const EditModal = ({ playlist }) => {
+const EditModal = ({ playlist }: { playlist: Playlist }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [name, setName] = useState(playlist.name)
   const [description, setDescription] = useState('')
@@ -124,16 +126,19 @@ const EditModal = ({ playlist }) => {
     setDescription('')
   }, [isOpen])
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault()
     const res = await fetcher('/playlist', 'PATCH', {
       playlistId: playlist.id,
       newName: name,
       newDescription: description,
     })
-    mutate('/playlist')
-    onClose()
-    router.replace(router.asPath)
+
+    if (res) {
+      mutate('/playlist')
+      onClose()
+      router.replace(router.asPath)
+    }
   }
 
   return (

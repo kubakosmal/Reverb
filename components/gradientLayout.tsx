@@ -1,6 +1,7 @@
 import { Box, Text, Flex } from '@chakra-ui/layout'
 import { Image } from '@chakra-ui/react'
 import UserDropdown from './userDropdown'
+import { GradientLayoutProps } from '../types/components'
 
 const GradientLayout = ({
   color,
@@ -10,7 +11,7 @@ const GradientLayout = ({
   title,
   description,
   roundImage,
-}) => {
+}: GradientLayoutProps) => {
   return (
     <Box
       position="relative"
@@ -38,7 +39,7 @@ const GradientLayout = ({
             <Text fontSize="sm" fontWeight="bold" casing="uppercase">
               {subtitle}
             </Text>
-            <Text dropShadow="2xl" fontSize="8xl" fontWeight="bold">
+            <Text dropShadow="2xl" fontSize="7xl" fontWeight="bold">
               {title}
             </Text>
             <Text fontSize="sm">{description}</Text>

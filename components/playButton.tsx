@@ -2,8 +2,9 @@ import { IconButton } from '@chakra-ui/react'
 import { BsFillPlayFill } from 'react-icons/bs'
 import { useDispatch } from 'react-redux'
 import { changeActiveSong, changeActiveSongs } from '../lib/playlistSlice'
+import { Song } from '../types/data'
 
-export default function PlayButton({ songs }) {
+export default function PlayButton({ songs }: { songs: Song[] }) {
   const dispatch = useDispatch()
   const handlePlay = () => {
     dispatch(changeActiveSong(songs[0]))

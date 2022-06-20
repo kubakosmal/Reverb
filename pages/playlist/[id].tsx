@@ -6,14 +6,16 @@ import { getSession } from 'next-auth/react'
 import PlayListDropdown from '../../components/playlistDropdown'
 import { Box } from '@chakra-ui/layout'
 import PlayButton from '../../components/playButton'
+import { PlaylistProps } from '../../types/pages'
+import { GetServerSideProps } from 'next'
+import { User } from '../../types/data'
 
-const getBGColor = (id) => {
+const getBGColor = (id: number) => {
   const colors = ['red', 'blue', 'orange', 'purple', 'gray', 'teal', 'yellow']
   return colors[id - 1] || colors[Math.floor(Math.random() * colors.length)]
 }
 
-const Playlist = ({ playlist, session }) => {
-  console.log(playlist)
+const Playlist = ({ playlist }: PlaylistProps) => {
   if (!playlist) {
     return 'loading'
   }
@@ -27,13 +29,13 @@ const Playlist = ({ playlist, session }) => {
       title={playlist.name}
       subtitle="playlist"
       description={`${playlist.user.name} ${playlist.songs.length} songs`}
-      image={`https://picsum.photos/400?random=${playlist.id}`}
+      image={playlist.image}
     >
       <Box bg="transparent" color="white">
         <Box padding="10px" marginBottom="20px">
           <Flex>
             <PlayButton songs={playlist.songs} />
-            <PlayListDropdown playlist={playlist} songs={playlist.songs} />
+            <PlayListDropdown playlist={playlist} />
           </Flex>
           <SongTable songs={playlist.songs}></SongTable>
         </Box>
@@ -42,15 +44,15 @@ const Playlist = ({ playlist, session }) => {
   )
 }
 
-export const getServerSideProps = async (context) => {
-  const query = context.query
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const id = context.query.id
   const session = await getSession(context)
-  const user = session.user
+  const user = session?.user as User
 
   const [playlist] = await prisma.playlist.findMany({
     where: {
-      id: +query.id,
-      userId: user.id,
+      id: Number(id),
+      userId: user?.id,
     },
     include: {
       songs: {

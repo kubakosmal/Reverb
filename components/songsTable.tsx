@@ -6,12 +6,13 @@ import { formatDate, formatTime } from '../lib/formatters'
 import { useDispatch, useSelector } from 'react-redux'
 import { changeActiveSong, changeActiveSongs } from '../lib/playlistSlice'
 import SongDropdown from './songDropdown'
+import { Song } from '../types/data'
 
-const SongTable = ({ songs }) => {
+const SongTable = ({ songs }: { songs: Song[] }) => {
   const activeSong = useSelector((state: any) => state.playlist.activeSong)
   const dispatch = useDispatch()
 
-  const handlePlay = (activeSong) => {
+  const handlePlay = (activeSong: Song) => {
     dispatch(changeActiveSong(activeSong))
     dispatch(changeActiveSongs(songs))
   }

@@ -9,6 +9,7 @@ import {
   Center,
   Flex,
   Text,
+  RangeSliderProps,
 } from '@chakra-ui/react'
 import {
   MdShuffle,
@@ -20,13 +21,12 @@ import {
 } from 'react-icons/md'
 import { useEffect, useRef, useState } from 'react'
 import ReactHowler from 'react-howler'
-import { useStoreActions, useStoreState } from 'easy-peasy'
-import { validateRoute } from '../lib/auth'
 import { formatTime } from '../lib/formatters'
 import { useDispatch } from 'react-redux'
 import { changeActiveSong } from '../lib/playlistSlice'
+import { PlayerProps } from '../types/components'
 
-const Player = ({ songs, activeSong }) => {
+const Player = ({ songs, activeSong }: PlayerProps) => {
   const [isPlaying, setIsPlaying] = useState(true)
   const [index, setIndex] = useState(
     songs.findIndex((s) => s.id === activeSong.id)
@@ -41,7 +41,7 @@ const Player = ({ songs, activeSong }) => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    let timerId
+    let timerId: number
     if (isPlaying && !isSeeking) {
       const f = () => {
         setSeek(soundRef.current.seek())
@@ -60,11 +60,11 @@ const Player = ({ songs, activeSong }) => {
     repeatRef.current = isRepeat
   }, [isRepeat])
 
-  const setPlayState = (value) => {
+  const setPlayState = (value: boolean) => {
     setIsPlaying(value)
   }
 
-  const setShuffleState = (value) => {
+  const setShuffleState = (value: boolean) => {
     if (value) {
       setIsShuffle((val) => !val)
       setIsRepeat(false)
@@ -73,7 +73,7 @@ const Player = ({ songs, activeSong }) => {
     }
   }
 
-  const setRepeatState = (value) => {
+  const setRepeatState = (value: boolean) => {
     if (value) {
       setIsRepeat((val) => !val)
       setIsShuffle(false)
@@ -102,7 +102,7 @@ const Player = ({ songs, activeSong }) => {
     setDuration(songDuration)
   }
 
-  const onSeek = (e) => {
+  const onSeek = (e: any) => {
     setSeek(parseFloat(e[0]))
     soundRef.current.seek(e[0])
   }

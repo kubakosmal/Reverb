@@ -1,19 +1,23 @@
 import prisma from '../lib/prisma'
 import GradientLayout from '../components/gradientLayout'
-import { Box, Flex, Text, LinkBox } from '@chakra-ui/layout'
-import { Image } from '@chakra-ui/react'
-import NextLink from 'next/link'
-import { useSession, signIn, signOut } from 'next-auth/react'
+import { Box, Flex, Text } from '@chakra-ui/layout'
+import { useSession } from 'next-auth/react'
+import ArtistCard from '../components/artistCard'
+import { HomeProps } from '../types/pages'
+import { User } from '../types/data'
 
-const Home = ({ artists }) => {
+const Home = ({ artists }: HomeProps) => {
+  console.log('SIEMA ')
+
   const { data: session, status } = useSession()
-  const chujwieco = useSession()
 
   if (status != 'authenticated') {
     return null
   }
 
-  const user = session.user
+  const user = session.user as User
+
+  console.log(user)
 
   return (
     <GradientLayout
@@ -31,29 +35,9 @@ const Home = ({ artists }) => {
           </Text>
           <Text fontSize="medium">only visible to you</Text>
         </Box>
-        <Flex gap="30px" flexWrap="wrap">
+        <Flex gap="20px" flexWrap="wrap">
           {artists.map((artist) => (
-            <LinkBox key={artist.id}>
-              <NextLink href={`/artist/${artist.id}`}>
-                <Box width="150px" cursor="pointer" key={artist.id}>
-                  <Box
-                    bg="gray.900"
-                    borderRadius="4px"
-                    padding="15px"
-                    width="100%"
-                  >
-                    <Image
-                      src={`https://picsum.photos/400?random=${artist.id}`}
-                      borderRadius="100%"
-                    />
-                    <Box marginTop="20px">
-                      <Text fontSize="large">{artist.name}</Text>
-                      <Text fontSize="sm">Artist</Text>
-                    </Box>
-                  </Box>
-                </Box>
-              </NextLink>
-            </LinkBox>
+            <ArtistCard artist={artist} />
           ))}
         </Flex>
       </Box>

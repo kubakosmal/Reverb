@@ -4,11 +4,15 @@ import 'reset-css'
 import store from '../lib/store'
 import { Provider } from 'react-redux'
 import { SessionProvider } from 'next-auth/react'
-import { QueryClient, QueryClientProvider } from 'react-query'
-
-const queryClient = new QueryClient()
+import { getSession } from 'next-auth/react'
+import { GetServerSideProps } from 'next'
+import { AppProps } from 'next/app'
+import '@fontsource/montserrat'
 
 const theme = extendTheme({
+  fonts: {
+    body: '"Montserrat", sans-serif',
+  },
   colors: {
     gray: {
       100: '#F5f5f5',
@@ -18,8 +22,14 @@ const theme = extendTheme({
       500: '#9E9E9E',
       600: '#757575',
       700: '#616161',
-      800: '#424242',
-      900: '#212121',
+      800: '#272727',
+      900: '#151515',
+    },
+    green: {
+      1000: '#1DB954',
+    },
+    black: {
+      1000: '#191414',
     },
   },
   components: {
@@ -39,7 +49,7 @@ const theme = extendTheme({
 export default function App({
   Component,
   pageProps: { session, ...pageProps },
-}) {
+}: AppProps) {
   return (
     <SessionProvider session={session}>
       <ChakraProvider theme={theme}>
@@ -55,4 +65,21 @@ export default function App({
       </ChakraProvider>
     </SessionProvider>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession(context)
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/signin',
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: { session },
+  }
 }

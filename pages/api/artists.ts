@@ -1,7 +1,15 @@
 import prisma from '../../lib/prisma'
-import { validateRoute } from '../../lib/auth'
+import { getSession } from 'next-auth/react'
+import { NextApiResponse } from 'next'
 
-export default validateRoute(async (req, res) => {
+export default async (res: NextApiResponse) => {
+  const session = getSession()
+
+  if (!session) {
+    res.status(401)
+    res.end()
+  }
+
   const artists = await prisma.artist.findMany()
   res.json(artists)
-})
+}

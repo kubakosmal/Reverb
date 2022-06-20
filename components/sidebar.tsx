@@ -1,13 +1,4 @@
-import NextLink from 'next/link'
-import {
-  Box,
-  List,
-  ListItem,
-  Divider,
-  LinkBox,
-  LinkOverlay,
-  Text,
-} from '@chakra-ui/layout'
+import { Box, List, Divider, Text } from '@chakra-ui/layout'
 import {
   MdHome,
   MdSearch,
@@ -16,7 +7,8 @@ import {
   MdFavorite,
 } from 'react-icons/md'
 import { usePlaylist } from '../lib/hooks'
-import { SidebarItem } from './sideBarItem'
+import { SidebarItem } from './sidebarItem'
+import { Playlist } from '../types/data'
 
 const navMenu = [
   {
@@ -43,11 +35,11 @@ const musicMenu = [
     route: '/api/newplaylist',
     action: 'createPlaylist',
   },
-  {
+  /*   {
     name: 'Favorites',
     icon: MdFavorite,
     route: '/favorites',
-  },
+  }, */
 ]
 
 const Sidebar = () => {
@@ -114,7 +106,7 @@ const Sidebar = () => {
           }}
         >
           <List spacing={2}>
-            {playlists?.map((playlist) => {
+            {playlists?.map((playlist: Playlist) => {
               playlist.route = `/playlist/${playlist.id}`
               return (
                 <SidebarItem bold={false} withIcon={false} item={playlist} />

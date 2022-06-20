@@ -1,12 +1,4 @@
-import {
-  Box,
-  List,
-  ListItem,
-  Text,
-  Flex,
-  LinkBox,
-  LinkOverlay,
-} from '@chakra-ui/layout'
+import { Box, List, ListItem, Text, Flex } from '@chakra-ui/layout'
 import { IconButton } from '@chakra-ui/react'
 import { BsThreeDots } from 'react-icons/bs'
 import { useRef, useEffect, useState } from 'react'
@@ -14,8 +6,12 @@ import { MdOutlineArrowRight } from 'react-icons/md'
 import { usePlaylist } from '../lib/hooks'
 import fetcher from '../lib/fetcher'
 import { useSWRConfig } from 'swr'
+import { Playlist } from '../types/data'
+import { AiOutlinePlus } from 'react-icons/ai'
+import { useRouter } from 'next/router'
 
-export default function SongDropdown({ songId }) {
+export default function SongDropdown({ songId }: { songId: number }) {
+  const router = useRouter()
   const [dropdown, setDropdown] = useState(false)
   const [playlistDropdown, setPlaylistDropdown] = useState(false)
   const { playlists } = usePlaylist()
@@ -23,19 +19,19 @@ export default function SongDropdown({ songId }) {
   const playlistDiv = useRef(null)
   const { mutate } = useSWRConfig()
 
-  const handleClick = (e) => {
+  const handleClick = (e: any) => {
     e.stopPropagation()
     setDropdown((val) => !val)
   }
 
-  const handleClickOutside = (e) => {
+  const handleClickOutside = (e: MouseEvent) => {
     if (box.current && !box.current.contains(e.target)) {
       setDropdown(false)
       setPlaylistDropdown(false)
     }
   }
 
-  const handleMouseOutside = (e) => {
+  const handleMouseOutside = (e: MouseEvent) => {
     if (playlistDiv.current && !playlistDiv.current.contains(e.target)) {
       setPlaylistDropdown(false)
     } else {
@@ -43,13 +39,24 @@ export default function SongDropdown({ songId }) {
     }
   }
 
-  const handlePlaylistClick = async (playlistId) => {
+  const handlePlaylistClick = async (e: any, playlistId: number) => {
+    e.stopPropagation()
     const res = await fetcher('/playlist', 'PUT', {
       playlistId: playlistId,
       songId: songId,
     })
     console.log(res)
     mutate('/playlist')
+  }
+
+  const handleNewPlaylist = async (e: any) => {
+    e.stopPropagation()
+    const newPlaylist = await fetcher('/playlist', 'POST')
+
+    if (newPlaylist) {
+      mutate('/playlist')
+      router.push(`${window.location.origin}/playlist/${newPlaylist.id}`)
+    }
   }
 
   useEffect(() => {
@@ -78,7 +85,7 @@ export default function SongDropdown({ songId }) {
       <Box
         position="absolute"
         hidden={!dropdown}
-        bgColor="gray.900"
+        bgColor="black.1000"
         color="white"
         left="-140px"
         borderRadius="5px"
@@ -115,7 +122,7 @@ export default function SongDropdown({ songId }) {
                 padding="3px"
               >
                 <List>
-                  {playlists.map((playlist) => (
+                  {playlists.map((playlist: Playlist) => (
                     <ListItem
                       borderRadius="5px"
                       paddingY="5px"
@@ -125,11 +132,30 @@ export default function SongDropdown({ songId }) {
                           bgColor: 'gray.800',
                         },
                       }}
-                      onClick={() => handlePlaylistClick(playlist.id)}
+                      onClick={(e) => handlePlaylistClick(e, playlist.id)}
                     >
                       {playlist.name}
                     </ListItem>
                   ))}
+                  <ListItem
+                    display="flex"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    borderRadius="5px"
+                    paddingY="5px"
+                    paddingX="10px"
+                    sx={{
+                      '&:hover': {
+                        bgColor: 'gray.800',
+                      },
+                    }}
+                    onClick={handleNewPlaylist}
+                  >
+                    <Text>New Playlist</Text>
+                    <Box justifySelf="flex-end">
+                      <AiOutlinePlus />
+                    </Box>
+                  </ListItem>
                 </List>
               </Box>
             </Flex>

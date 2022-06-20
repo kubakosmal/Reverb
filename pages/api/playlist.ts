@@ -1,16 +1,20 @@
 import prisma from '../../lib/prisma'
 import { getSession } from 'next-auth/react'
+import { NextApiRequest, NextApiResponse } from 'next'
+import { User, Song } from '../../types/data'
+import { UserSession } from '../../types/data'
 
-export default async (req, res) => {
+export default async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getSession({ req })
+  const userSession = session?.user as UserSession
 
-  if (!session) {
+  if (!userSession) {
     return res.status(401).json({ unauthorized: true })
   }
 
   const user = await prisma.user.findUnique({
     where: {
-      email: session.user.email,
+      id: userSession.id,
     },
   })
 
@@ -42,13 +46,14 @@ export default async (req, res) => {
   }
 }
 
-const createNewPlaylist = async (user) => {
+const createNewPlaylist = async (user: User) => {
   const newPlaylist = await prisma.playlist.create({
     data: {
       name: 'New Playlist',
+      image: `https://picsum.photos/seed/${Math.random() * 100}/400`,
       user: {
         connect: {
-          id: user.id,
+          id: user?.id,
         },
       },
     },
@@ -56,7 +61,7 @@ const createNewPlaylist = async (user) => {
   return newPlaylist
 }
 
-const deletePlaylist = async (playlistId) => {
+const deletePlaylist = async (playlistId: number) => {
   const deletedPlaylist = await prisma.playlist.delete({
     where: {
       id: playlistId,
@@ -65,7 +70,7 @@ const deletePlaylist = async (playlistId) => {
   return deletedPlaylist
 }
 
-const addSongToPlaylist = async (playlistId, songId) => {
+const addSongToPlaylist = async (playlistId: number, songId: number) => {
   const song = await prisma.song.findUnique({
     where: {
       id: songId,
@@ -87,7 +92,7 @@ const addSongToPlaylist = async (playlistId, songId) => {
     },
     data: {
       songs: {
-        connect: [{ id: song.id }],
+        connect: [{ id: song?.id }],
       },
     },
   })
@@ -95,10 +100,10 @@ const addSongToPlaylist = async (playlistId, songId) => {
   return addSong
 }
 
-const getPlaylists = async (user) => {
+const getPlaylists = async (user: User) => {
   const playlists = await prisma.playlist.findMany({
     where: {
-      userId: user.id,
+      userId: user?.id,
     },
     orderBy: {
       name: 'asc',

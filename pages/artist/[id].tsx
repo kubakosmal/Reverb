@@ -2,14 +2,15 @@ import { Box } from '@chakra-ui/layout'
 import GradientLayout from '../../components/gradientLayout'
 import prisma from '../../lib/prisma'
 import SongTable from '../../components/songsTable'
-import PlaylistDropdown from '../../components/playlistDropdown'
 import PlayButton from '../../components/playButton'
+import { Artist } from '../../types/data'
+import { GetServerSideProps } from 'next'
 
-export default function Artist({ artist }) {
+export default function ArtistPage({ artist }: { artist: Artist }) {
   return (
     <GradientLayout
       color="red"
-      image={`https://picsum.photos/400?random=${artist.id}`}
+      image={artist.image}
       title={artist.name}
       subtitle="Artist"
       description={`${artist.songs.length} song${
@@ -27,10 +28,11 @@ export default function Artist({ artist }) {
   )
 }
 
-export const getServerSideProps = async ({ query }) => {
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  const { id } = query
   const [artist] = await prisma.artist.findMany({
     where: {
-      id: +query.id,
+      id: Number(id),
     },
     include: {
       songs: {

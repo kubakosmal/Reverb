@@ -3,15 +3,15 @@ import {
   LinkOverlay,
   LinkBox,
   ListIcon,
-  Box,
   Flex,
 } from '@chakra-ui/layout'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import fetcher from '../lib/fetcher'
 import { useSWRConfig } from 'swr'
+import { SidebarItemProps } from '../types/components'
 
-export const SidebarItem = ({ item, withIcon, bold }) => {
+export const SidebarItem = ({ item, withIcon, bold }: SidebarItemProps) => {
   const router = useRouter()
   const { mutate } = useSWRConfig()
 
@@ -19,8 +19,11 @@ export const SidebarItem = ({ item, withIcon, bold }) => {
     const newPlaylist = await fetcher('/playlist', 'POST', {
       action: item.action,
     })
-    mutate('/playlist')
-    router.push(`${window.location.origin}/playlist/${newPlaylist.id}`)
+
+    if (newPlaylist) {
+      mutate('/playlist')
+      router.push(`${window.location.origin}/playlist/${newPlaylist.id}`)
+    }
   }
 
   return (

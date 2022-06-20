@@ -12,7 +12,6 @@ import NextLink from 'next/link'
 import { Image } from '@chakra-ui/react'
 import { MdArrowDropDown } from 'react-icons/md'
 import { useState } from 'react'
-import { useRouter } from 'next/router'
 import { useSession, signOut } from 'next-auth/react'
 
 export default () => {
@@ -28,6 +27,7 @@ export default () => {
   return (
     <>
       <Button
+        zIndex={5}
         borderRadius="50px"
         position="absolute"
         top="20px"
@@ -74,12 +74,12 @@ export default () => {
         top="65px"
         padding="3px"
         color="white"
-        bgColor="gray.900"
+        bgColor="black.1000"
         borderRadius="5px"
-        boxShadow="2xl"
+        boxShadow="xl"
       >
         <List>
-          <ListItem fontSize="15px">
+          {/*   <ListItem fontSize="15px">
             <LinkBox
               borderRadius="3px"
               paddingY="10px"
@@ -94,7 +94,7 @@ export default () => {
                 <LinkOverlay>Account</LinkOverlay>
               </NextLink>
             </LinkBox>
-          </ListItem>
+          </ListItem> */}
           <ListItem fontSize="15px">
             <Box
               borderRadius="3px"
@@ -105,7 +105,9 @@ export default () => {
                   bgColor: 'gray.800',
                 },
               }}
-              onClick={() => signOut()}
+              onClick={() =>
+                signOut({ callbackUrl: `${window.location.origin}` })
+              }
               cursor="pointer"
             >
               Sign out

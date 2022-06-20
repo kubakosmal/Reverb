@@ -60,6 +60,7 @@ export const artistsData: {
   },
   {
     name: 'Darren Curtis',
+
     songs: [
       {
         name: 'Dance Of The Dead',
@@ -80,6 +81,7 @@ export const artistsData: {
   },
   {
     name: 'Ben Sound',
+
     songs: [
       {
         name: 'The Elevator Bossa Nova',
@@ -90,6 +92,7 @@ export const artistsData: {
   },
   {
     name: 'LiQWYD',
+
     songs: [
       {
         name: 'Winter',
@@ -100,6 +103,7 @@ export const artistsData: {
   },
   {
     name: 'FSM Team',
+
     songs: [
       {
         name: 'Eternal Springtime',
