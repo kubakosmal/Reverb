@@ -73,8 +73,10 @@ export const SidebarItem = ({ item, withIcon, bold }: SidebarItemProps) => {
             },
           }}
         >
-          <ListIcon fontSize="25px" as={item.icon} marginRight="15px" />
-          {item.name}
+          <Flex align="center">
+            <ListIcon fontSize="25px" as={item.icon} marginRight="15px" />
+            {item.name}
+          </Flex>
         </ListItem>
       )}
     </>
