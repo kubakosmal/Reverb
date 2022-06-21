@@ -1,8 +1,8 @@
 
 # Reverb
 
-A Spotify clone built with Next.js framework. Work in progress :construction:
+A Spotify clone built with Next.js framework.
 
 
 ## Website
-https://reverb-red.vercel.app/
+https://reverb.jkosmal.com
