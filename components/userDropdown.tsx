@@ -1,27 +1,30 @@
-import {
-  Button,
-  Flex,
-  Box,
-  Text,
-  List,
-  ListItem,
-  LinkBox,
-  LinkOverlay,
-} from '@chakra-ui/react'
-import NextLink from 'next/link'
+import { Button, Flex, Box, Text, List, ListItem } from '@chakra-ui/react'
 import { Image } from '@chakra-ui/react'
 import { MdArrowDropDown } from 'react-icons/md'
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useSession, signOut } from 'next-auth/react'
 
 export default () => {
   const [dropdown, setDropdown] = useState(false)
   const { data: session, status } = useSession()
+  const button = useRef(null)
+
+  const handleClickOutside = (e: MouseEvent) => {
+    if (button.current && !button.current.contains(e.target)) {
+      setDropdown(false)
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [])
 
   if (status != 'authenticated') {
     return null
   }
-
   let user = session.user
 
   return (
@@ -79,24 +82,9 @@ export default () => {
         boxShadow="xl"
       >
         <List>
-          {/*   <ListItem fontSize="15px">
-            <LinkBox
-              borderRadius="3px"
-              paddingY="10px"
-              paddingX="10px"
-              sx={{
-                '&:hover': {
-                  bgColor: 'gray.800',
-                },
-              }}
-            >
-              <NextLink href="/account" passHref>
-                <LinkOverlay>Account</LinkOverlay>
-              </NextLink>
-            </LinkBox>
-          </ListItem> */}
           <ListItem fontSize="15px">
             <Box
+              ref={button}
               borderRadius="3px"
               paddingY="10px"
               paddingX="10px"

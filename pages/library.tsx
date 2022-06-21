@@ -1,4 +1,4 @@
-import { Box, Text, LinkBox } from '@chakra-ui/layout'
+import { Box, Text, LinkBox, Flex } from '@chakra-ui/layout'
 import { Image } from '@chakra-ui/react'
 import { GetServerSideProps } from 'next'
 import prisma from '../lib/prisma'
@@ -7,53 +7,50 @@ import { User, Playlist } from '../types/data'
 import UserDropdown from '../components/userDropdown'
 import { useSession } from 'next-auth/react'
 import NextLink from 'next/link'
+import Card from '../components/card'
 
 export default function Library({ playlists }: { playlists: Playlist[] }) {
   const { data: session } = useSession()
+
+  if (!session) {
+    return 'loading'
+  }
+
   const user = session.user
+
   return (
     <Box height="100%">
       <UserDropdown />
-      <Box bgColor="gray.900" width="100%" height="80px"></Box>
+      <Box bgColor="gray.900" padding="20px" width="100%" height="80px">
+        <Text fontWeight="medium" fontSize="3xl" color="white">
+          Library
+        </Text>
+      </Box>
       <Box
         padding="20px"
         color="white"
         height="calc(100% - 80px)"
-        bgColor="gray.800"
+        bgGradient="linear(to-br, gray.800, blackAlpha.900)"
       >
-        <Text fontWeight="semibold" fontSize="2xl">
+        <Text fontWeight="semibold" fontSize="xl">
           Playlists
         </Text>
 
-        <Box marginY="20px" display="flex" flexWrap="wrap">
+        <Box display="flex" flexWrap="wrap">
           {playlists.length < 1 ? (
-            <Text>You haven't created a playlist yet</Text>
+            <Text>You haven't created a single playlist yet</Text>
           ) : (
             <>
-              {playlists.map((playlist) => (
-                <NextLink href={`/playlist/${playlist.id}`}>
-                  <LinkBox
-                    width="175px"
-                    padding="15px"
-                    bgColor="gray.900"
-                    borderRadius="10px"
-                    transition="all"
-                    transitionDuration="0.5s"
-                    cursor="pointer"
-                    sx={{
-                      '&:hover': {
-                        bgColor: 'black',
-                      },
-                    }}
-                  >
-                    <Image borderRadius="3px" src={playlist.image} />
-                    <Box marginTop="10px">
-                      <Text>{playlist.name}</Text>
-                      <Text color="gray.500">By {user.name}</Text>
-                    </Box>
-                  </LinkBox>
-                </NextLink>
-              ))}
+              <Flex marginY="15px" flexWrap="wrap" gap="20px">
+                {playlists.map((playlist) => (
+                  <Card
+                    key={playlist.id}
+                    type="playlist"
+                    subtext=""
+                    item={playlist}
+                  />
+                ))}
+              </Flex>
             </>
           )}
         </Box>

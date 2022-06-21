@@ -49,7 +49,7 @@ const SongTable = ({ songs }: { songs: Song[] }) => {
                 <Image
                   boxSize="40px"
                   boxShadow="2xl"
-                  src={`https://picsum.photos/400?random=${song.id}`}
+                  src={song.image}
                   fit="cover"
                 />
                 <Flex direction="column">

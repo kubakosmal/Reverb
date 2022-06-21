@@ -12,7 +12,6 @@ export default function fetcher(
     body: JSON.stringify(data),
   }).then((res) => {
     if (res.status > 399 && res.status < 200) {
-      console.log(';((')
       throw new Error()
     }
     return res.json()

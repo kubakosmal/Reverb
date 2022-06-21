@@ -1,8 +1,11 @@
 import { getProviders, signIn } from 'next-auth/react'
-import { Box, Center, Text, Divider } from '@chakra-ui/layout'
+import { Box, Center, Text } from '@chakra-ui/layout'
 import { Button } from '@chakra-ui/react'
-import { AiFillGithub, AiFillFacebook } from 'react-icons/ai'
-import { FaDiscord } from 'react-icons/fa'
+import {
+  AiFillGithub,
+  AiFillFacebook,
+  AiFillGoogleCircle,
+} from 'react-icons/ai'
 import fetcher from '../lib/fetcher'
 import { GetServerSideProps } from 'next'
 import { Providers, Provider } from '../types/data'
@@ -12,20 +15,19 @@ const iconSize = '20px'
 const providersItem = {
   github: {
     icon: <AiFillGithub fontSize={iconSize} />,
-    bgColor: 'black',
+    bgColor: '#171515',
   },
   facebook: {
     icon: <AiFillFacebook fontSize={iconSize} />,
     bgColor: '#4267B2',
   },
-  discord: {
-    icon: <FaDiscord fontSize={iconSize} />,
-    bgColor: '#5865F2',
+  google: {
+    icon: <AiFillGoogleCircle fontSize={iconSize} />,
+    bgColor: '#DB4437',
   },
 }
 
 export default function SignIn({ providers }: Providers) {
-  console.log(providers)
   const handleClick = async () => {
     const user = await fetcher('/guest', 'GET')
     if (user) {
@@ -80,7 +82,7 @@ export default function SignIn({ providers }: Providers) {
                         callbackUrl: window.location.origin,
                       })
                     }}
-                    colorScheme="green"
+                    colorScheme="blackAlpha"
                     border="2px solid"
                     borderColor="whiteAlpha.300"
                   >

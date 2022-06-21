@@ -32,3 +32,15 @@ export interface SidebarItemProps {
   withIcon: boolean
   bold: boolean
 }
+
+export interface CardProps {
+  type: string
+  subtext: string
+  item: Artist | Playlist | Song
+}
+
+export interface SongCardProps {
+  type: string
+  subtext: string
+  song: Song
+}

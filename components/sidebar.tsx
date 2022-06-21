@@ -1,11 +1,5 @@
 import { Box, List, Divider, Text } from '@chakra-ui/layout'
-import {
-  MdHome,
-  MdSearch,
-  MdLibraryMusic,
-  MdPlaylistAdd,
-  MdFavorite,
-} from 'react-icons/md'
+import { MdHome, MdSearch, MdLibraryMusic, MdPlaylistAdd } from 'react-icons/md'
 import { usePlaylist } from '../lib/hooks'
 import { SidebarItem } from './sidebarItem'
 import { Playlist } from '../types/data'
@@ -35,11 +29,6 @@ const musicMenu = [
     route: '/api/newplaylist',
     action: 'createPlaylist',
   },
-  /*   {
-    name: 'Favorites',
-    icon: MdFavorite,
-    route: '/favorites',
-  }, */
 ]
 
 const Sidebar = () => {
@@ -109,7 +98,12 @@ const Sidebar = () => {
             {playlists?.map((playlist: Playlist) => {
               playlist.route = `/playlist/${playlist.id}`
               return (
-                <SidebarItem bold={false} withIcon={false} item={playlist} />
+                <SidebarItem
+                  key={playlist.id}
+                  bold={false}
+                  withIcon={false}
+                  item={playlist}
+                />
               )
             })}
           </List>

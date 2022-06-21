@@ -8,6 +8,7 @@ export interface Song {
   playlists: Playlist[]
   duration: number
   url: string
+  image?: string
 }
 
 export interface Artist {

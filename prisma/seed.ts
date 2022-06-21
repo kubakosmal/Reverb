@@ -2,8 +2,7 @@ import { PrismaClient } from '@prisma/client'
 import { artistsData } from './songsData'
 
 const prisma = new PrismaClient()
-
-const playlistsNames = ['First playlist', 'Second playlist', 'Third playlist']
+const guestPlaylistsNames = ['Go Vote', 'The best of ice cream truck', 'Gym']
 
 const run = async () => {
   await Promise.all(
@@ -19,6 +18,7 @@ const run = async () => {
               name: song.name,
               duration: song.duration,
               url: song.url,
+              image: `https://picsum.photos/seed/${Math.random() * 100}/400`,
             })),
           },
         },
@@ -35,17 +35,18 @@ const run = async () => {
     },
   })
 
-  /* const songs = await prisma.song.findMany({})
+  const songs = await prisma.song.findMany({})
+  const fewSongs = songs.slice(0, 10)
   await Promise.all(
     new Array(3).fill(1).map(async (_, i) => {
       return prisma.playlist.create({
         data: {
-          name: playlistsNames[i],
+          name: guestPlaylistsNames[i],
           user: {
             connect: { id: user.id },
           },
           songs: {
-            connect: songs.map((song) => ({
+            connect: fewSongs.map((song) => ({
               id: song.id,
             })),
           },
@@ -53,7 +54,7 @@ const run = async () => {
         },
       })
     })
-  ) */
+  )
 }
 
 run()

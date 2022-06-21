@@ -61,6 +61,9 @@ export default function PlaylistDropdown({ playlist }: PlaylistDropdownProps) {
             '&:hover': {
               bgColor: 'transparent',
             },
+            '&:focus': {
+              boxShadow: 'none',
+            },
           }}
           onClick={() => setDropdown((val) => !val)}
         >
@@ -89,12 +92,14 @@ export default function PlaylistDropdown({ playlist }: PlaylistDropdownProps) {
                   },
                 }}
                 onClick={handleDelete}
+                cursor="pointer"
               >
                 Delete
               </Box>
             </ListItem>
             <ListItem fontSize="15px">
               <Box
+                cursor="pointer"
                 borderRadius="3px"
                 paddingY="10px"
                 paddingX="10px"
@@ -158,7 +163,13 @@ const EditModal = ({ playlist }: { playlist: Playlist }) => {
             <ModalHeader fontSize="2xl" fontWeight="bold">
               Edit details
             </ModalHeader>
-            <ModalCloseButton />
+            <ModalCloseButton
+              sx={{
+                '&:focus': {
+                  boxShadow: 'none',
+                },
+              }}
+            />
             <ModalBody>
               <Flex>
                 <Image

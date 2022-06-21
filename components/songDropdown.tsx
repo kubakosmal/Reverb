@@ -14,10 +14,17 @@ export default function SongDropdown({ songId }: { songId: number }) {
   const router = useRouter()
   const [dropdown, setDropdown] = useState(false)
   const [playlistDropdown, setPlaylistDropdown] = useState(false)
+  const [dropdownDirection, setDropdownDirection] = useState('left')
   const { playlists } = usePlaylist()
   const box = useRef(null)
   const playlistDiv = useRef(null)
   const { mutate } = useSWRConfig()
+
+  useEffect(() => {
+    if (box.current.offsetLeft < 200) {
+      setDropdownDirection('right')
+    }
+  }, [box])
 
   const handleClick = (e: any) => {
     e.stopPropagation()
@@ -41,12 +48,15 @@ export default function SongDropdown({ songId }: { songId: number }) {
 
   const handlePlaylistClick = async (e: any, playlistId: number) => {
     e.stopPropagation()
+    setDropdown(false)
     const res = await fetcher('/playlist', 'PUT', {
       playlistId: playlistId,
       songId: songId,
     })
-    console.log(res)
-    mutate('/playlist')
+
+    if (res) {
+      mutate('/playlist')
+    }
   }
 
   const handleNewPlaylist = async (e: any) => {
@@ -85,7 +95,7 @@ export default function SongDropdown({ songId }: { songId: number }) {
       <Box
         position="absolute"
         hidden={!dropdown}
-        bgColor="black.1000"
+        bgColor="gray.900"
         color="white"
         left="-140px"
         borderRadius="5px"
@@ -112,11 +122,12 @@ export default function SongDropdown({ songId }: { songId: number }) {
               <Text>Add to playlist</Text>
               <MdOutlineArrowRight fontSize="20px" />
               <Box
+                zIndex={10}
                 borderRadius="3px"
                 boxShadow="3xl"
                 width="170px"
                 bgColor="gray.900"
-                left="-170px"
+                left={dropdownDirection === 'left' ? '-165px' : '165px'}
                 position="absolute"
                 hidden={!playlistDropdown}
                 padding="3px"
@@ -124,6 +135,7 @@ export default function SongDropdown({ songId }: { songId: number }) {
                 <List>
                   {playlists.map((playlist: Playlist) => (
                     <ListItem
+                      key={playlist.id}
                       borderRadius="5px"
                       paddingY="5px"
                       paddingX="10px"
@@ -151,7 +163,7 @@ export default function SongDropdown({ songId }: { songId: number }) {
                     }}
                     onClick={handleNewPlaylist}
                   >
-                    <Text>New Playlist</Text>
+                    <Text>Create New</Text>
                     <Box justifySelf="flex-end">
                       <AiOutlinePlus />
                     </Box>

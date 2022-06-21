@@ -2,13 +2,14 @@ import prisma from '../lib/prisma'
 import GradientLayout from '../components/gradientLayout'
 import { Box, Flex, Text } from '@chakra-ui/layout'
 import { useSession } from 'next-auth/react'
-import ArtistCard from '../components/artistCard'
+import Card from '../components/card'
 import { HomeProps } from '../types/pages'
 import { User } from '../types/data'
+import { getSession } from 'next-auth/react'
+import { GetServerSideProps } from 'next'
+import { UserSession } from '../types/data'
 
-const Home = ({ artists }: HomeProps) => {
-  console.log('SIEMA ')
-
+const Home = ({ artists, playlists }: HomeProps) => {
   const { data: session, status } = useSession()
 
   if (status != 'authenticated') {
@@ -17,38 +18,75 @@ const Home = ({ artists }: HomeProps) => {
 
   const user = session.user as User
 
-  console.log(user)
-
   return (
     <GradientLayout
-      color="cyan"
+      color="gray"
       title={user.name}
       subtitle="profile"
-      description={`10 public playlists`}
+      description={
+        playlists.length ? `${playlists.length} public playlists` : ''
+      }
       image={user.image}
       roundImage={true}
     >
       <Box color="white" paddingX="40px">
-        <Box marginBottom="40px">
+        <Box marginBottom="20px">
           <Text fontSize="2xl" fontWeight="bold">
             Top artists this month
           </Text>
           <Text fontSize="medium">only visible to you</Text>
         </Box>
         <Flex gap="20px" flexWrap="wrap">
-          {artists.map((artist) => (
-            <ArtistCard artist={artist} />
-          ))}
+          {artists.map((artist, i) =>
+            i < 6 ? (
+              <Card
+                type="artist"
+                subtext="Artist"
+                key={artist.id}
+                item={artist}
+              />
+            ) : null
+          )}
         </Flex>
       </Box>
+
+      {playlists.length ? (
+        <Box marginY="60px" color="white" paddingX="40px">
+          <Box marginBottom="20px">
+            <Text fontSize="2xl" fontWeight="bold">
+              Recent playlists
+            </Text>
+          </Box>
+          <Flex gap="20px" flexWrap="wrap">
+            {playlists.map((playlist) => (
+              <Card
+                type="playlist"
+                subtext={`by ${user.name}`}
+                key={playlist.id}
+                item={playlist}
+              />
+            ))}
+          </Flex>
+        </Box>
+      ) : null}
     </GradientLayout>
   )
 }
 
-export const getServerSideProps = async () => {
-  let artists = await prisma.artist.findMany({})
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession(context)
+  const user = session.user as UserSession
+  const artists = await prisma.artist.findMany({})
+  const playlists = await prisma.playlist.findMany({
+    where: {
+      userId: user.id,
+    },
+  })
   return {
-    props: { artists: JSON.parse(JSON.stringify(artists)) },
+    props: {
+      artists: JSON.parse(JSON.stringify(artists)),
+      playlists: JSON.parse(JSON.stringify(playlists)),
+    },
   }
 }
 

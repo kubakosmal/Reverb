@@ -2,7 +2,6 @@ import { Box, Flex, Text } from '@chakra-ui/layout'
 import { Image } from '@chakra-ui/react'
 import Player from './player'
 import { useSelector } from 'react-redux'
-import { useEffect } from 'react'
 import InactivePlayer from './inactivePlayer'
 import { motion } from 'framer-motion'
 
@@ -20,7 +19,7 @@ const PlayerBar = () => {
                 <Image
                   boxSize="45px"
                   boxShadow="2xl"
-                  src={`https://picsum.photos/400?random=${activeSong.id}`}
+                  src={activeSong.image}
                   fit="cover"
                 />
               </Box>

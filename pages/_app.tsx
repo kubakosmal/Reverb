@@ -8,10 +8,12 @@ import { getSession } from 'next-auth/react'
 import { GetServerSideProps } from 'next'
 import { AppProps } from 'next/app'
 import '@fontsource/montserrat'
+import '@fontsource/rubik'
+import '@fontsource/work-sans'
 
 const theme = extendTheme({
   fonts: {
-    body: '"Montserrat", sans-serif',
+    body: '"Work Sans", sans-serif',
   },
   colors: {
     gray: {

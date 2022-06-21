@@ -22,7 +22,7 @@ const GradientLayout = ({
       <UserDropdown />
       <Box>
         <Flex
-          /* bgColor={`${color}.800`} */ bgGradient={`linear(to top, ${color}.800, ${color}.600)`}
+          bgGradient={`linear(to top, ${color}.800, ${color}.600)`}
           padding="20px"
           align="end"
         >

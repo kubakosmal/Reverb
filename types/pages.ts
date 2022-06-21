@@ -3,6 +3,7 @@ import { Song, Artist, Playlist, Session } from './data'
 
 export interface HomeProps {
   artists: Artist[]
+  playlists: Playlist[]
 }
 
 export interface SearchProps {

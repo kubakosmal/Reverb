@@ -9,7 +9,6 @@ import {
   Center,
   Flex,
   Text,
-  RangeSliderProps,
 } from '@chakra-ui/react'
 import {
   MdShuffle,
@@ -47,9 +46,7 @@ const Player = ({ songs, activeSong }: PlayerProps) => {
         setSeek(soundRef.current.seek())
         timerId = requestAnimationFrame(f)
       }
-
       timerId = requestAnimationFrame(f)
-
       return () => cancelAnimationFrame(timerId)
     }
 

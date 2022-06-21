@@ -46,13 +46,10 @@ const Playlist = ({ playlist }: PlaylistProps) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = context.query.id
-  const session = await getSession(context)
-  const user = session?.user as User
 
   const [playlist] = await prisma.playlist.findMany({
     where: {
       id: Number(id),
-      userId: user?.id,
     },
     include: {
       songs: {
