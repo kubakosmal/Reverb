@@ -1,4 +1,3 @@
-import { ReactNode } from 'react'
 import { Song, Artist, Playlist, Session } from './data'
 
 export interface HomeProps {
@@ -15,7 +14,7 @@ export interface SearchProps {
 export interface AppProps {
   Component: any
   pageProps: {
-    session: Session
+    session: any
     [key: string]: any
   }
 }

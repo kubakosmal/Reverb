@@ -9,6 +9,7 @@ import {
 import fetcher from '../lib/fetcher'
 import { GetServerSideProps } from 'next'
 import { Providers, Provider } from '../types/data'
+import { useState } from 'react'
 
 const iconSize = '20px'
 
@@ -28,7 +29,9 @@ const providersItem = {
 }
 
 export default function SignIn({ providers }: Providers) {
+  const [isLoading, setIsLoading] = useState(false)
   const handleClick = async () => {
+    setIsLoading(true)
     const user = await fetcher('/guest', 'GET')
     if (user) {
       signIn('credentials', {
@@ -85,6 +88,11 @@ export default function SignIn({ providers }: Providers) {
                     colorScheme="blackAlpha"
                     border="2px solid"
                     borderColor="whiteAlpha.300"
+                    sx={{
+                      '&:focus': {
+                        boxShadow: 'none',
+                      },
+                    }}
                   >
                     <Box display="flex" columnGap="10px" alignItems="center">
                       {
@@ -120,6 +128,7 @@ export default function SignIn({ providers }: Providers) {
               lost after you sign out.
             </Text>
             <Button
+              isLoading={isLoading}
               marginY="20px"
               boxShadow="3xl"
               alignSelf="flex-end"
@@ -131,6 +140,11 @@ export default function SignIn({ providers }: Providers) {
               onClick={handleClick}
               border="2px solid"
               borderColor="whiteAlpha.300"
+              sx={{
+                '&:focus': {
+                  boxShadow: 'none',
+                },
+              }}
             >
               GUEST SESSION
             </Button>

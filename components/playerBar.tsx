@@ -3,7 +3,6 @@ import { Image } from '@chakra-ui/react'
 import Player from './player'
 import { useSelector } from 'react-redux'
 import InactivePlayer from './inactivePlayer'
-import { motion } from 'framer-motion'
 
 const PlayerBar = () => {
   const songs = useSelector((state: any) => state.playlist.activeSongs)
@@ -33,15 +32,7 @@ const PlayerBar = () => {
 
         <Box width="40%">
           {activeSong ? (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{
-                opacity: 1,
-              }}
-              transition={{ duration: 0.25 }}
-            >
-              <Player songs={songs} activeSong={activeSong} />
-            </motion.div>
+            <Player songs={songs} activeSong={activeSong} />
           ) : (
             <InactivePlayer />
           )}

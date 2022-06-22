@@ -1,22 +1,19 @@
-import { Box, Text, LinkBox, Flex } from '@chakra-ui/layout'
-import { Image } from '@chakra-ui/react'
+import { Box, Text, Flex } from '@chakra-ui/layout'
 import { GetServerSideProps } from 'next'
 import prisma from '../lib/prisma'
 import { getSession } from 'next-auth/react'
 import { User, Playlist } from '../types/data'
 import UserDropdown from '../components/userDropdown'
 import { useSession } from 'next-auth/react'
-import NextLink from 'next/link'
+import LoadingScreen from '../components/loadingScreen'
 import Card from '../components/card'
 
 export default function Library({ playlists }: { playlists: Playlist[] }) {
   const { data: session } = useSession()
 
   if (!session) {
-    return 'loading'
+    return <LoadingScreen />
   }
-
-  const user = session.user
 
   return (
     <Box height="100%">

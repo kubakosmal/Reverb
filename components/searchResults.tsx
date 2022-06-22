@@ -71,15 +71,17 @@ export default function SearchResults({
           <Text fontWeight="bold" fontSize="2xl">
             Artists
           </Text>
-          <Flex marginY="15px" flexWrap="wrap" gap="20px">
-            {matchingArtists?.map((artist) => (
-              <Card
-                key={artist.id}
-                type="artist"
-                subtext="Artist"
-                item={artist}
-              />
-            ))}
+          <Flex marginY="15px" flexWrap="nowrap" gap="20px">
+            {matchingArtists?.map((artist, i) =>
+              i < 6 ? (
+                <Card
+                  key={artist.id}
+                  type="artist"
+                  subtext="Artist"
+                  item={artist}
+                />
+              ) : null
+            )}
           </Flex>
         </Box>
       ) : null}
