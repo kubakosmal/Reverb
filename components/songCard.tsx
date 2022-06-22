@@ -20,7 +20,7 @@ export const SongCard = ({ song, subtext, type }: SongCardProps) => {
   return (
     <Box
       minWidth="100px"
-      maxWidth="255px"
+      maxWidth="175px"
       boxShadow="lg"
       cursor="pointer"
       key={song.id}

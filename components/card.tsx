@@ -7,13 +7,7 @@ export default function Card({ item, subtext, type }: CardProps) {
   return (
     <LinkBox key={item.id}>
       <NextLink href={`/${type}/${item.id}`}>
-        <Box
-          minWidth="100px"
-          maxWidth="255px"
-          dropShadow="dark-xl"
-          cursor="pointer"
-          key={item.id}
-        >
+        <Box width="175px" dropShadow="dark-xl" cursor="pointer" key={item.id}>
           <Box
             boxShadow="lg"
             bg="gray.900"
