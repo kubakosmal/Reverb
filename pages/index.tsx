@@ -38,7 +38,7 @@ const Home = ({ artists, playlists }: HomeProps) => {
         </Box>
         <Flex gap="20px" flexWrap="wrap">
           {artists.map((artist, i) =>
-            i < 6 ? (
+            i < 5 ? (
               <Card
                 type="artist"
                 subtext="Artist"
