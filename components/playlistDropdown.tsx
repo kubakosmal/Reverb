@@ -176,7 +176,7 @@ const EditModal = ({ playlist }: { playlist: Playlist }) => {
                   boxShadow="2xl"
                   width="170px"
                   height="170px"
-                  src={`https://picsum.photos/400?random=${playlist.id}`}
+                  src={playlist.image}
                 ></Image>
                 <Flex
                   flexDirection="column"
