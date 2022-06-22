@@ -8,14 +8,12 @@ import { User } from '../types/data'
 import { getSession } from 'next-auth/react'
 import { GetServerSideProps } from 'next'
 import { UserSession } from '../types/data'
-import LoadingScreen from '../components/loadingScreen'
-import { useEffect, useState } from 'react'
 
 const Home = ({ artists, playlists }: HomeProps) => {
   const { data: session, status } = useSession()
 
   if (status != 'authenticated') {
-    return <LoadingScreen />
+    return null
   }
 
   const user = session.user as User

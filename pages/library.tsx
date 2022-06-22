@@ -5,14 +5,13 @@ import { getSession } from 'next-auth/react'
 import { User, Playlist } from '../types/data'
 import UserDropdown from '../components/userDropdown'
 import { useSession } from 'next-auth/react'
-import LoadingScreen from '../components/loadingScreen'
 import Card from '../components/card'
 
 export default function Library({ playlists }: { playlists: Playlist[] }) {
   const { data: session } = useSession()
 
   if (!session) {
-    return <LoadingScreen />
+    return null
   }
 
   return (
