@@ -69,7 +69,13 @@ const SongTable = ({ songs }: { songs: Song[] }) => {
                       },
                     }}
                   >
-                    <NextLink href={`/artist/${song.artist.id}`}>
+                    <NextLink
+                      onClick={(e) => {
+                        e.preventDefault()
+                        e.stopPropagation()
+                      }}
+                      href={`/artist/${song.artist.id}`}
+                    >
                       <a>{song.artist.name}</a>
                     </NextLink>
                   </Text>

@@ -74,6 +74,7 @@ export default function SignIn({ providers }: Providers) {
               if (provider.id != 'credentials') {
                 return (
                   <Button
+                    key={provider.id}
                     paddingY="22px"
                     bgColor={
                       providersItem[provider.id as keyof typeof providersItem]

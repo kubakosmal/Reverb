@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import prisma from '../../lib/prisma'
 import { Song } from '../../types/data'
+import { addPlaylistsToUser } from '../../lib/apiHelpers'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   let playlists = new Array()
@@ -31,25 +32,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         'https://s.abcnews.com/images/Politics/biden-file-gty-ml-201106_1604680381500_hpMain_16x9_1600.jpg',
     },
   })
-
   const songsIds = playlists[0].songs.map((song: Song) => ({ id: song.id }))
-
-  const newPlaylists = playlists.map(async (playlist) => {
-    const newPlaylist = await prisma.playlist.create({
-      data: {
-        name: playlist.name,
-        image: playlist.image,
-        user: {
-          connect: {
-            id: user.id,
-          },
-        },
-        songs: {
-          connect: songsIds,
-        },
-      },
-    })
-    return newPlaylist
-  })
+  const newPlaylists = await addPlaylistsToUser(playlists, user, songsIds)
   res.json(user)
 }

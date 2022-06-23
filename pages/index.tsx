@@ -24,7 +24,11 @@ const Home = ({ artists, playlists }: HomeProps) => {
       title={user.name}
       subtitle="profile"
       description={
-        playlists.length ? `${playlists.length} public playlists` : ''
+        playlists.length
+          ? `${playlists.length} public playlist${
+              playlists.length !== 1 ? 's' : null
+            }`
+          : ''
       }
       image={user.image}
       roundImage={true}
@@ -82,6 +86,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       userId: user.id,
     },
   })
+
   return {
     props: {
       artists: JSON.parse(JSON.stringify(artists)),

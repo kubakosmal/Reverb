@@ -1,5 +1,5 @@
 import prisma from './prisma'
-import { User } from '../types/data'
+import { User, Playlist } from '../types/data'
 
 export const createNewPlaylist = async (user: User) => {
   const newPlaylist = await prisma.playlist.create({
@@ -66,4 +66,32 @@ export const getPlaylists = async (user: User) => {
   })
 
   return playlists
+}
+
+export const addPlaylistsToUser = async (
+  playlists: Playlist[],
+  user: User,
+  songsIds: Object[]
+) => {
+  const newPlaylists = await Promise.all(
+    playlists.map(async (playlist) => {
+      const newPlaylist = await prisma.playlist.create({
+        data: {
+          name: playlist.name,
+          image: playlist.image,
+          user: {
+            connect: {
+              id: user.id,
+            },
+          },
+          songs: {
+            connect: songsIds,
+          },
+        },
+      })
+      return newPlaylist
+    })
+  )
+
+  return newPlaylists
 }
