@@ -7,9 +7,8 @@ import { SessionProvider } from 'next-auth/react'
 import { getSession } from 'next-auth/react'
 import { GetServerSideProps } from 'next'
 import { AppProps } from '../types/pages'
-import '@fontsource/montserrat'
-import '@fontsource/rubik'
 import '@fontsource/work-sans'
+import '../styles/globals.css'
 
 const theme = extendTheme({
   fonts: {

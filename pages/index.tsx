@@ -12,8 +12,8 @@ import { UserSession } from '../types/data'
 const Home = ({ artists, playlists }: HomeProps) => {
   const { data: session, status } = useSession()
 
-  if (status != 'authenticated') {
-    return null
+  if (status != 'authenticated' || !artists) {
+    return <Box color="white">SIEMA SIMEA COSIK SIE LADUJE</Box>
   }
 
   const user = session.user as User
@@ -40,7 +40,7 @@ const Home = ({ artists, playlists }: HomeProps) => {
           </Text>
           <Text fontSize="medium">only visible to you</Text>
         </Box>
-        <Flex gap="20px" flexWrap="wrap">
+        <Flex gap="20px" flexWrap="nowrap">
           {artists.map((artist, i) =>
             i < 5 ? (
               <Card
